@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <%= render 'shared/head' %>
+
+  <body>
+    <%= render 'shared/header' %>
+
+    <main>
+      <div class="container">
+        <%= content_for?(:content) ? yield(:content) : yield %>
+      </div>
+    </main>
+
+    <%= custom_flash_messages %>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<% content_for :devise_form do %>
+  <% content_for :page_title do %>
+    Edit <%= resource_name.to_s.humanize %>
+  <% end %>
+
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= render 'devise/shared/error_messages', resource: resource %>
+
+    <%= f.input :name %>
+
+    <%= f.input :email %>
+
+    <div class="input-group">
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.input :password, 
+            hint: "#{@minimum_password_length} characters minimum" %>
+      </div>
+      <div class="col-md-6">
+        <%= f.input :password_confirmation %>
+      </div>
+    </div>
+
+    <%= f.input :current_password,
+        hint: 'we need your current password to confirm your changes' %>
+
+    <div class="input-group">
+      <%= f.submit 'Update', class: 'btn btn-primary btn-block' %>
+    </div>
+  <% end %>
+
+  <hr class="mt-4" />
+
+  <h5 class="text-center">Cancel my account</h5>
+
+  <div class="text-center">
+    <p class="mb-3 text-muted">
+      <b>Delete account</b>
+      Once you delete your account, there is no going back. Please be certain.
+    </p>
+
+    <%= link_to 'Cancel account', registration_path(resource_name), 
+        data: { confirm: 'Are you sure?' }, 
+        method: :delete, 
+        class: 'btn btn-sm btn-danger' %>
+  </div>
+<% end %>
+
+<%= render 'devise/shared/form_wrap' %>

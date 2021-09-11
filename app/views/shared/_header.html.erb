@@ -1,0 +1,19 @@
+<nav class="navbar navbar-dark bg-dark">
+  <%= link_to root_path, class: 'navbar-brand' do %>
+    <%= image_tag 'https://getbootstrap.com/docs/4.6/assets/brand/bootstrap-solid.svg',
+        width: 30, 
+        height: 30 %>
+    Kickoff
+  <% end %>
+  <div class="ml-auto">
+    <% if user_signed_in? %>
+      <%= link_to 'Sign out', 
+          destroy_user_session_path, 
+          method: :delete,
+          class: 'btn btn-secondary' %>
+    <% else %>
+      <%= link_to 'Login', new_user_session_path, class: 'btn btn-outline-light' %>
+      <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</nav>

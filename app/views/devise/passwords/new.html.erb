@@ -1,0 +1,21 @@
+<% content_for :devise_form do %>
+  <% content_for :page_title do %>
+    Forgot your password?
+  <% end %>
+
+  <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <%= render 'devise/shared/error_messages', resource: resource %>
+
+    <%= f.input :email %>
+
+    <div class="input-group">
+      <%= f.submit 'Send me reset password instructions', class: 'btn btn-primary btn-block' %>
+    </div>
+  <% end %>
+
+  <hr class="mt-4" />
+  
+  <%= render 'devise/shared/links' %>
+<% end %>
+
+<%= render 'devise/shared/form_wrap' %>

@@ -1,0 +1,27 @@
+<% content_for :devise_form do %>
+  <% content_for :page_title do %>
+    Change your password
+  <% end %>
+
+  <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+    <%= render 'devise/shared/error_messages', resource: resource %>
+
+    <%= f.hidden_field :reset_password_token %>
+
+    <%= f.input :password, 
+        hint: "#{@minimum_password_length} characters minimum",
+        placeholder: 'Your new password' %>
+
+    <%= f.input :password_confirmation, placeholder: 'Confirm new password' %>
+
+    <div class="input-group">
+      <%= f.submit 'Change my password', class: 'btn btn-primary btn-block' %>
+    </div>
+  <% end %>
+
+  <hr class="mt-4" />
+
+  <%= render 'devise/shared/links' %>
+<% end %>
+
+<%= render 'devise/shared/form_wrap' %>

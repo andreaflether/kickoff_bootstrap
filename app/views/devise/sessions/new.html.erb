@@ -1,0 +1,26 @@
+<% content_for :devise_form do %>
+  <% content_for :page_title do %>
+    Sign in
+  <% end %>
+
+  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= f.input :email %>
+
+    <%= f.input :password %>
+
+    <div class="input-group justify-content-center">
+      <% if devise_mapping.rememberable? -%>
+        <%= f.input :remember_me, as: :boolean, wrapper: :custom_boolean %>
+      <% end %>
+    </div>
+
+    <div class="input-group">
+      <%= f.submit 'Log in', class: 'btn btn-primary btn-block' %>
+    </div>
+  <% end %>
+
+  <hr class="mt-4" />
+  <%= render 'devise/shared/links' %>
+<% end %>
+
+<%= render 'devise/shared/form_wrap' %>

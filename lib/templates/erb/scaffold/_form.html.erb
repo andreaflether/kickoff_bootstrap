@@ -1,0 +1,35 @@
+<%%= simple_form_for(<%= model_resource_name %>) do |form| %>
+  <%% if <%= singular_table_name %>.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%%= pluralize(<%= singular_table_name %>.errors.count, "error") %> prohibited this <%= singular_table_name %> from being saved:
+      </h2>
+
+      <ul>
+      <%% <%= singular_table_name %>.errors.full_messages.each do |message| %>
+        <li><%%= message %></li>
+      <%% end %>
+      </ul>
+    </div>
+  <%% end %>
+
+<% attributes.each do |attribute| -%>
+  <%%= form.input :<%= attribute.column_name %> %>
+<% end -%>
+
+  <div class="mb-3">
+    <%% if <%= model_resource_name %>.persisted? %>
+      <div class="float-right">
+        <%%= link_to 'Destroy', <%= model_resource_name %>, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+      </div>
+    <%% end %>
+
+    <%%= form.button :submit, class: 'btn btn-primary' %>
+
+    <%% if <%= model_resource_name %>.persisted? %>
+      <%%= link_to "Cancel", <%= model_resource_name %>, class: "btn btn-light" %>
+    <%% else %>
+      <%%= link_to "Cancel", <%= index_helper %>_path, class: "btn btn-light" %>
+    <%% end %>
+  </div>
+<%% end %>
