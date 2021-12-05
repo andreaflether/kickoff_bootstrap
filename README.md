@@ -1,54 +1,27 @@
-# Rails Kickoff – Bootstrap
-A rapid Rails 6 application template for personal use. This particular template utilizes [Tailwind CSS](https://tailwindcss.com/), a utility-first CSS framework for rapid UI development.
+# Kickoff Bootstrap – Rails Template
+Kickoff is a rapid Rails template using [Bootstrap](https://getbootstrap.com/), so you pass it in as an option when creating a new app.
 
-Need version 5.2.3 support? [Check out this branch](https://github.com/justalever/kickoff_tailwind/tree/rails5-2)
+Heavily by [Jumpstart](https://github.com/excid3/jumpstart) from [Chris Oliver](https://twitter.com/excid3/) and [Kickoff Tailwind](https://github.com/justalever/kickoff_tailwind) from [Andy Leverenz](http://www.justalever.com/).
 
-Tailwind depends on Webpack so this also comes bundled with [webpacker](https://github.com/rails/webpacker) support.
+#### Requirements
 
-Inspired heavily by [Jumpstart](https://github.com/excid3/jumpstart) from [Chris Oliver](https://twitter.com/excid3/). Credits to him for a bunch here.
+You'll need the following installed to run the template successfully:
 
-Be sure to also check out [Jumpstart Pro](https://jumpstartrails.com) to save loads of time creating your next Rails application. Chris, Jason, and I teamed up on it.
+* Ruby 3 or higher (3.0.1 is recommended) - `rvm install 3.0.1` and then `rvm use 3.0.1`
+* Bundler - `gem install bundler`
+* Rails 6 or higher - `gem install rails -v 6.0.4.1`
+* Database - Postgres is recommended, but you can use MySQL, SQLite3, etc
+* Yarn - `brew install yarn` or [Install Yarn](https://yarnpkg.com/en/docs/install)
+* Foreman (optional) - `gem install foreman` - helps run all your processes in development
 
-### Included gems
-
-- [devise](https://github.com/plataformatec/devise)
-- [friendly_id](https://github.com/norman/friendly_id)
-- [sidekiq](https://github.com/mperham/sidekiq)
-- [name_of_person](https://github.com/basecamp/name_of_person)
-
-### Tailwind CSS by default
-With Rails 6 we have webpacker by default now. Using PostCSS we can install Tailwind as a base CSS framework to harness. I prefer Tailwind due to it's un-opinionated approach.
-
-## How it works
-
-When creating a new rails app simply pass the template file through.
-
-### Creating a new app
+#### Creating a new app
 
 ```bash
-$ rails new sample_app -d <postgresql, mysql, sqlite3> -m template.rb
+rails _6.0.4.1_ new myapp -d <postgresql, mysql, sqlite3> -T -m https://raw.githubusercontent.com/andreaflether/kickoff_bootstrap/main/template.rb
 ```
 
-### Once installed what do I get?
+Or if you have downloaded this repo, you can reference template.rb locally:
 
-- Webpack support + Tailwind CSS configured in the `app/javascript` directory.
-- Devise with a new `name` field already migrated in. The name field maps to the `first_name` and `last_name` fields in the database thanks to the `name_of_person` gem. 
-- Enhanced views using Tailwind CSS.
-- Support for Friendly IDs thanks to the handy [friendly_id](https://github.com/norman/friendly_id) gem. Note that you'll still need to do some work inside your models for this to work. This template installs the gem and runs the associated generator.
-- Optional Foreman support thanks to a `Procfile`. Once you scaffold the template, run `foreman start` to initalize and head to `locahost:5000` to get `rails server`, `sidekiq` and `bin/webpack-dev-server` running all in one terminal instance. Note: Webpack will still compile down with just `rails server` if you don't want to use Foreman. Foreman needs to be installed as a global gem on your system for this to work. i.e. `gem install foreman`
-- A custom scaffold view template when generating theme resources (Work in progress).
-- Git initialization out of the box
-- PurgeCSS configuration to help with CSS file sizes 
-- Custom defaults for button and form elements
-
-### Boot it up
-
-`$ rails server`
-
-### Boot it up (with foreman)
-Run `foreman start`. Head to `locahost:5000` to see your app. You'll have hot reloading on `js` and `css` and `scss/sass` files by default. Feel free to configure to look for more to compile reload as your app scales.
-
-
-### Watch an overview
-
- 📹 [https://youtu.be/kuKMRl8nj2w](https://youtu.be/kuKMRl8nj2w) - A bit dated now that Rails 6 is out now.
+```bash
+rails _6.0.4.1_ new myapp -d <postgresql, mysql, sqlite3> -T -m template.rb
+```
