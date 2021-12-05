@@ -23,16 +23,18 @@ def add_gems
 end
 
 def add_gem_groups
-  dev_and_test_group = <<-RUBY
-  gem 'annotate'
-  gem 'better_errors'
-  gem 'faker'
-  gem 'rspec-rails', '~> 5.0.0'
+  # Development and test group
+  dev_and_test_group = <<~RUBY
+    gem 'annotate'
+    gem 'better_errors'
+    gem 'faker'
+    gem 'rspec-rails', '~> 5.0.0'
   RUBY
 
   append_to_file "Gemfile",
-    "\n#{dev_and_test_group}",
-    after: "group :development, :test do"
+    after: "group :development, :test do\n" do
+      dev_and_test_group.indent(2)
+    end
 
   # Test group
   test_group = <<~RUBY
@@ -54,18 +56,20 @@ def add_gem_groups
     "#{test_group}\n",
     before: "# Windows does not include zoneinfo files, so bundle the tzinfo-data gem"
 
-  dev_group = <<-RUBY
-  gem 'bullet'
-  gem 'query_diet'
-  gem 'guard', '~> 2.15'
-  gem 'guard-livereload', require: false
-  gem 'rack-livereload'
-  gem 'spring-commands-rspec'
+  # Development group
+  dev_group = <<~RUBY
+    gem 'bullet'
+    gem 'query_diet'
+    gem 'guard', '~> 2.15'
+    gem 'guard-livereload', require: false
+    gem 'rack-livereload'
+    gem 'spring-commands-rspec'
   RUBY
 
   append_to_file "Gemfile",
-    "\n#{dev_group}",
-    after: "group :development do"
+    after: "group :development do\n" do
+      dev_group.indent(2)
+    end
 end
 
 def add_users
@@ -91,13 +95,14 @@ def add_users
   end
 
   # name_of_person gem
-  person_content = <<~RUBY
+  name_of_person = <<~RUBY
     has_person_name
   RUBY
 
   append_to_file "app/models/user.rb", 
-    "#{person_content}\n",
-    after: "class User < ApplicationRecord\n"
+    after: "class User < ApplicationRecord\n" do
+      name_of_person.indent(2)
+    end
 end
 
 def add_livereload
@@ -126,15 +131,15 @@ def add_app_packages
   
   append_to_file "app/javascript/packs/application.js",
     <<~CODE
-    \nrequire('bootstrap/dist/js/bootstrap.bundle.min')
-    import toastr from 'toastr'
-    global.toastr = toastr
+      \nrequire('bootstrap/dist/js/bootstrap.bundle.min')
+      import toastr from 'toastr'
+      global.toastr = toastr
     CODE
 
   append_to_file "app/javascript/packs/application.js",
     <<~CODE
-    \nimport 'stylesheets/application'
-    import '@fortawesome/fontawesome-free/css/all'
+      \nimport 'stylesheets/application'
+      import '@fortawesome/fontawesome-free/css/all'
     CODE
 
   append_to_file "config/webpack/environment.js", 
@@ -164,19 +169,19 @@ def tests_config
   # Add bin/rspec command for Spring
   run "spring binstub rspec"
 
-  tests_config = <<-RUBY
-  # FactoryBot lint
-  config.before(:suite) do
-    FactoryBot.lint
-  end
+  tests_config = <<~RUBY
+    # FactoryBot lint
+    config.before(:suite) do
+      FactoryBot.lint
+    end
 
-  # Run specs in random order to surface order dependencies
-  config.order = :random
+    # Run specs in random order to surface order dependencies
+    config.order = :random
   RUBY
 
   # FB Lint creates each factory and catches any exceptions raised during the creation process
   append_to_file "spec/spec_helper.rb",
-    "#{tests_config}\n",
+    "#{tests_config}\n".indent(2),
     after: "RSpec.configure do |config|\n"
 end
 
@@ -204,17 +209,17 @@ def add_simplecov
 end
 
 def add_shoulda_matchers
-  shoulda_config = <<-RUBY
-  Shoulda::Matchers.configure do |config|
-    config.integrate do |with|
-      with.test_framework :rspec
-      with.library :rails
+  shoulda_config = <<~RUBY
+    Shoulda::Matchers.configure do |config|
+      config.integrate do |with|
+        with.test_framework :rspec
+        with.library :rails
+      end
     end
-  end
   RUBY
 
   append_to_file "spec/rails_helper.rb",
-    "#{shoulda_config}\n",
+    "#{shoulda_config}\n".indent(2),
     after: "RSpec.configure do |config|\n"
 end
 
@@ -223,21 +228,21 @@ def add_database_cleaner
     "require 'database_cleaner'",
     after: "# Add additional requires below this line. Rails is not loaded until this point!"
 
-  db_cleaner_config = <<-RUBY
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.around do |example|
-    DatabaseCleaner.cleaning do
-      example.run
+  db_cleaner_config = <<~RUBY
+    config.before(:suite) do
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.clean_with(:truncation)
     end
-  end
+
+    config.around do |example|
+      DatabaseCleaner.cleaning do
+        example.run
+      end
+    end
   RUBY
 
   append_to_file "spec/rails_helper.rb",
-    "#{db_cleaner_config}\n",
+    "#{db_cleaner_config}\n".indent(2),
     after: "RSpec.configure do |config|\n"
 end
 
@@ -273,17 +278,16 @@ after_bundle do
   add_shoulda_matchers
   add_database_cleaner
   annotate
-  run_rubocop
-
+  
   # Migrate
   rails_command "db:create"
   rails_command "db:migrate"
-
+  
   # Git
   git :init
   git add: "."
   git commit: %Q{ -m "Initial commit" }
-
+  
   say
   say "Kickoff app successfully created! ✌️" , :green
   say
