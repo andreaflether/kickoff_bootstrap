@@ -25,3 +25,15 @@ Or if you have downloaded this repo, you can reference template.rb locally:
 ```bash
 rails _6.0.4.1_ new myapp -d <postgresql, mysql, sqlite3> -T -m template.rb
 ```
+### Included libraries
+
+#### Gems
+- Devise
+- Name of Person
+- Simple Form
+
+#### Test
+RSpec setup including: FactoryBot, Faker, Database Cleaner and SimpleCov.
+
+#### Javascript
+Webpacker with Bootstrap, Toastr and Font Awesome.
